@@ -2,7 +2,7 @@
 - 👀 I’m interested in mathematics
 - 🌱 I’m currently learning Data Science
 - 💞️ I’m looking to collaborate on data analysys
-- 📫 How to reach me malyshkinamv@gmail.com
+- 📫 How to reach me malishkina.mascha@yandex.ru
 - 😄 Pronouns: ...
 - ⚡ Fun fact: ...
 
