@@ -24,7 +24,7 @@
   model = search_results['CatBoostClassifier'].best_estimator_
   ConfusionMatrixDisplay.from_estimator(model, X_test, y_test, cmap='Blues')
   plt.title('Матрица ошибок для лучшей модели CatBoostClassifier')
-
+  ```
 ---
 
 **Важность признаков: строится для CatBoost, заголовок от LGBM**
@@ -55,7 +55,7 @@
   ```python
   LGBMClassifier(..., class_weight='balanced', ...)
   CatBoostClassifier(..., auto_class_weights='Balanced', ...)
-
+```
 
 Это приводит к «двойному» усилению минорных классов и риску переобучения.
 Рекомендуется выбрать одну стратегию балансировки:
@@ -76,7 +76,9 @@
 Эти модели, как известно, специально оптимизированы для категориальных признаков. Если для них использовать OHE,
 то они теряют преимущество в обработке категорий. OHE создаёт много новых признаков (по одному на категорию),
 что приводит к увеличению размерности. Это замедляет обучение, особенно при большом числе категорий.
+
 В этом проекте  признак "створки_кл_ла" имеет 15 категорий -  не очень много, поэтому вполне допустимо использовать  OneHotEncoder для всех моделей.
+
 Но для лучшего результата можно было бы использовать встроенную обработку для LightGBM и CatBoost.
 
 Модифицированная функция get_preprocessor выглядела бы так:
@@ -99,7 +101,7 @@ def get_preprocessor(data, model_type='default'):
             ('onehot', OneHotEncoder(drop='first', handle_unknown='ignore'))
         ])
 ...
-
+```
 Адаптация функции search_best_models:
 ```python
 def search_best_models(X_train, y_train, X_test, y_test, models_and_params, data):
@@ -126,7 +128,7 @@ def search_best_models(X_train, y_train, X_test, y_test, models_and_params, data
             ('model', model)
         ])
       ...  
-        
-Такой подход позволит CatBoost и LightGBM использовать свои встроенные механизмы обработки категориальных признаков,
+  ```      
+Такой подход позволяет CatBoost и LightGBM использовать свои встроенные механизмы обработки категориальных признаков,
 что обычно дает лучшие результаты, чем принудительное применение OHE.
   
